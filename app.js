@@ -1,17 +1,17 @@
 const express = require("express");
 const http = require("http");
-
-const port = process.env.PORT || 80;
+const config = require("./config.json");
+const port = process.env.PORT || config.port;
 const hostname = "0.0.0.0";
 
 const app = express();
 
-app.get('/', function(req, res) {
-    return res.redirect('gamepad.html' + suffix);
+app.get("/", function(req, res) {
+  return res.redirect("index.html");
 });
 
 app.use(express.static("public"));
 
 const httpServer = http.createServer(app);
 
-httpServer.listen(config.http_port).on("error", console.log);
+httpServer.listen(port).on("error", console.log);
