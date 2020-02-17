@@ -1,54 +1,84 @@
-document.getElementById("upBtn").addEventListener("mousedown", upPress);
-document.getElementById("upBtn").addEventListener("mouseup", upRelease);
+document.getElementById("up").addEventListener("mousedown", upPress);
+document.getElementById("up").addEventListener("mouseup", upRelease);
+document.getElementById("up").addEventListener("mouseleave", upRelease);
 
 document.getElementById("down").addEventListener("mousedown", downPress);
 document.getElementById("down").addEventListener("mouseup", downRelease);
+document.getElementById("down").addEventListener("mouseleave", downRelease);
 
 document.getElementById("left").addEventListener("mousedown", leftPress);
 document.getElementById("left").addEventListener("mouseup", leftRelease);
+document.getElementById("left").addEventListener("mouseleave", leftRelease);
 
 document.getElementById("right").addEventListener("mousedown", rightPress);
 document.getElementById("right").addEventListener("mouseup", rightRelease);
-
-document.getElementById("joypad").addEventListener("unload", unload);
-
-var Gpio = require("onoff").Gpio;
-var Forward = new Gpio(17, "out");
-var Backward = new Gpio(18, "out");
-var Left = new Gpio(22, "out");
-var Right = new Gpio(23, "out");
+document.getElementById("right").addEventListener("mouseleave", rightRelease);
 
 function upPress() {
-  Forward.writeSync(1);
+  message = { c: "F", t: "1" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
+
 function upRelease() {
-  Forward.writeSync(0);
+  message = { c: "F", t: "0" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 
 function downPress() {
-  Backward.writeSync(1);
+  message = { c: "B", t: "1" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 function downRelease() {
-  Backward.writeSync(0);
+  message = { c: "B", t: "0" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 
 function leftPress() {
-  Left.writeSync(1);
+  message = { c: "L", t: "1" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 function leftRelease() {
-  Left.writeSync(0);
+  message = { c: "L", t: "0" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 
 function rightPress() {
-  Right.writeSync(1);
+  message = { c: "R", t: "1" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
 function rightRelease() {
-  Right.writeSync(0);
-}
-
-function unload() {
-  Backward.writeSync(0);
-  Forward.writeSync(0);
-  Left.writeSync(0);
-  Right.writeSync(0);
+  message = { c: "R", t: "0" };
+  $.post(
+    "/",
+    { data: message }, // data to be submit
+    function() {}
+  );
 }
