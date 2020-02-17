@@ -15,70 +15,30 @@ document.getElementById("right").addEventListener("mouseup", rightRelease);
 document.getElementById("right").addEventListener("mouseleave", rightRelease);
 
 function upPress() {
-  message = { c: "F", t: "1" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/upPress", function() {});
 }
 
 function upRelease() {
-  message = { c: "F", t: "0" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/upRelease", function() {});
 }
 
 function downPress() {
-  message = { c: "B", t: "1" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/downPress", function() {});
 }
 function downRelease() {
-  message = { c: "B", t: "0" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/downRelease", function() {});
 }
 
 function leftPress() {
-  message = { c: "L", t: "1" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/leftPress", function() {});
 }
 function leftRelease() {
-  message = { c: "L", t: "0" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/leftRelease", function() {});
 }
 
 function rightPress() {
-  message = { c: "R", t: "1" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/rightPress", function() {});
 }
 function rightRelease() {
-  message = { c: "R", t: "0" };
-  $.post(
-    "/",
-    { data: message }, // data to be submit
-    function() {}
-  );
+  $.post("/rightRelease", function() {});
 }

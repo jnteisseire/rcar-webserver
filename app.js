@@ -1,64 +1,59 @@
 const express = require("express");
 const http = require("http");
-const config = require("./config.json");
-const bodyParser = require("body-parser");
-const port = process.env.PORT || config.port;
+const gpio = require("onoff").Gpio;
 
+const up = new gpio(17, "out");
+const down = new gpio(18, "out");
+const left = new gpio(22, "out");
+const right = new gpio(23, "out");
+
+const port = process.env.PORT || 80;
 const app = express();
 
 app.use(express.static("public"));
-app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-);
-
-var tls = require("tls");
-var fs = require("fs");
-
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-var options = {
-  ca: fs.readFileSync("server.crt"),
-  checkServerIdentity: function(host, cert) {
-    return undefined;
-  }
-};
-
-var connected = false;
-var client;
-
-function connect() {
-  client = tls.connect(5000, "192.168.0.155", options, function() {
-    if (client.authorized) {
-      connected = true;
-      client.setEncoding("utf8");
-    }
-  });
-
-  client.on("error", e => {
-    console.log(e);
-  });
-
-  client.on("close", function() {
-    console.log("Disconnected");
-    connected = false;
-  });
-}
 
 app.get("/", function(req, res) {
   return res.redirect("index.html");
 });
 
-app.post("/", function(req, res) {
-  console.log("Received post data = " + JSON.stringify(req.body.data));
-  if (connected) {
-    client.write(JSON.stringify(req.body.data));
-    console.log(JSON.stringify(req.body.data));
-  } else {
-    connect();
-  }
-  res.end();
+app.post("/upPress", function(req, res) {
+  console.log("upPress");
+  up.writeSync(1);
+});
+
+app.post("/upRelease", function(req, res) {
+  console.log("upRelease");
+  up.writeSync(0);
+});
+
+app.post("/downPress", function(req, res) {
+  console.log("downPress");
+  down.writeSync(1);
+});
+
+app.post("/downRelease", function(req, res) {
+  console.log("downRelease");
+  down.writeSync(0);
+});
+
+app.post("/leftPress", function(req, res) {
+  console.log("leftPress");
+  left.writeSync(1);
+});
+
+app.post("/leftRelease", function(req, res) {
+  console.log("leftRelease");
+  left.writeSync(0);
+});
+
+app.post("/rightPress", function(req, res) {
+  console.log("rightPress");
+  right.writeSync(1);
+});
+
+app.post("/rightRelease", function(req, res) {
+  console.log("rightRelease");
+  right.writeSync(0);
 });
 
 const httpServer = http.createServer(app);
